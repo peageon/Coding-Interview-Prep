@@ -26,12 +26,11 @@ public class Main {
             for (int k = 0; k < n; k++) {
                 for (int j = 0; j < 2; j++) {
                     dp[j][k] = dk[j][k];
-                    if(k >= 2) {
-                        dp[j][k] = Math.max(dp[j][k], Math.max(dk[j][k]+dp[j][k-2], dk[j][k]+dp[(j+1)%2][k-2]));
-                    }
-
                     if(k >= 1) {
                         dp[j][k] = Math.max(dp[j][k], dk[j][k] + dp[(j+1)%2][k-1]);
+                    }
+                    if(k >= 2) {
+                        dp[j][k] = Math.max(dp[j][k], dk[j][k]+dp[(j+1)%2][k-2]);
                     }
                 }
             }
