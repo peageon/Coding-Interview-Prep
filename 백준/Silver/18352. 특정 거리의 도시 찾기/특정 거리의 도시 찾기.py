@@ -3,32 +3,33 @@ from collections import deque
 
 input = sys.stdin.readline
 
-# N 도시 수, M 도로 수, K 거리 정보 X 출발 도시
-N, M, K, X = map(int, input().split(' '))
-graph = [[] for _ in range(N+1)]
+n, m, k, x = map(int, input().split())
+cities = [[] for _ in range(n+1)]
+visited = [False] * (n+1)
 
-for _ in range(M):
-  a, b =  map(int, input().split(' '))  
-  graph[a].append(b)
+for _ in range(m):
+    a, b = map(int,input().split())
+    cities[a].append(b)
 
-distance = [-1] *(N+1)
-distance[X] = 0
+results = []
 
-# BFS 부분
-q = deque([X])
-while q:
-  now = q.popleft()
+que = deque()
+que.append((x, 0))
+visited[x] = True
 
-  for next in graph[now]:
-    if distance[next] == -1:
-      distance[next] = distance[now]+1
-      q.append(next)
+while que:
+    city, distance = que.popleft()
+    if distance == k:
+        results.append(city)
+        continue
 
-# K값이 distance에 있다면 i값출력 없다면 -1 출력
-if K in distance:
-  for i in range(1, N+1):
-    if distance[i] == K:
-      print(i)
-      check = True
+    for c in cities[city]:
+        if not visited[c]:
+            visited[c] = True
+            que.append((c, distance+1))
+
+results.sort()
+if not results:
+    print(-1)
 else:
-  print(-1)
+    print(*results)
