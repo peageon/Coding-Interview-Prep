@@ -4,14 +4,14 @@ import java.util.*;
 public class Main {
     static int M, N, K;
     static int[][] board;
-    static List<Integer> result;
+    static PriorityQueue<Integer> result;
     static int count;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         StringBuilder sb = new StringBuilder();
-        result = new ArrayList<>();
+        result = new PriorityQueue<>();
         count = 0;
 
         M = Integer.parseInt(st.nextToken());
@@ -37,10 +37,11 @@ public class Main {
                 }
             }
         }
-        Collections.sort(result);
 
         sb.append(count).append("\n");
-        result.forEach(number -> sb.append(number).append(" "));
+        while(!result.isEmpty()) {
+            sb.append(result.poll()).append(" ");
+        }
 
         System.out.println(sb);
     }
